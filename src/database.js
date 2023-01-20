@@ -23,6 +23,17 @@ const createTable = () => {
   });
 }
 
+const start = () => {
+  connection.query("SHOW TABLES LIKE 'people'", (err, result) => {
+    if (err) throw err;
+    if (result.length == 0) {
+      createTable();
+      addPerson("john doe");
+    } 
+  });
+}
+
+
 const addPerson = (name) => {
   const sql = `INSERT INTO people (name) VALUES ('${name}')`;
   connection.query(sql, (err, result) => {
@@ -40,7 +51,7 @@ const getPeople = (callback) => {
 }
 
 module.exports = {
-  createTable,
+  start,
   addPerson,
   getPeople
 };
